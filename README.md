@@ -2,6 +2,8 @@
 
 Hey there! 👋 I'm Ahmed, and this is my e-commerce frontend that I built with Angular! It's been an amazing journey learning Angular, TypeScript, and modern web development while creating this beautiful shopping experience.
 
+<!-- Deployment fix: Updated environment imports and removed unused dependencies -->
+
 ## What I Built 🚀
 
 This is a complete e-commerce frontend that connects to my Node.js backend API. I wanted to create something that not only works great but also looks amazing and provides a smooth user experience. From the moment I started learning Angular, I knew I wanted to build something real and useful!
