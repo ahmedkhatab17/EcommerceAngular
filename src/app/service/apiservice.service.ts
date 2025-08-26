@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { IProduct } from '../models/IProduct';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { ICategory } from '../models/ICategory';
 import { IUser, IAuthResponse, ILoginRequest, IRegisterRequest } from '../models/IUser';
 import { ICart, IAddToCartRequest, IUpdateCartRequest } from '../models/ICart';

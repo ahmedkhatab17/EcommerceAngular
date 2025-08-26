@@ -133,7 +133,7 @@
                 @for (o of orders; track o._id) {
                 <tr>
                   <td>#{{ o._id.slice(-6) }}</td>
-                  <td>{{ o.user?.name || 'N/A' }}</td>
+                  <td>{{ o.user.name || 'N/A' }}</td>
                   <td>
                     <span class="badge" [ngClass]="o.status === 'done' ? 'bg-success' : 'bg-warning'">{{ o.status }}</span>
                   </td>
