@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Day2": {
+    "ecommerce-angular": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -66,10 +66,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Day2:build:production"
+              "buildTarget": "ecommerce-angular:build:production"
             },
             "development": {
-              "buildTarget": "Day2:build:development"
+              "buildTarget": "ecommerce-angular:build:development"
             }
           },
           "defaultConfiguration": "development"
