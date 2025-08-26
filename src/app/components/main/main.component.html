@@ -1,0 +1,86 @@
+<div class="container mt-5">
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="alert alert-danger" role="alert">
+    {{ error }}
+  </div>
+
+  <!-- Products Grid -->
+  <div class="row" *ngIf="!loading && !error">
+    @for (product of filteredProduct; track trackByProductId($index, product)) {
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card h-100 shadow-sm" appMyStyle [myStyle]="'rgba(0, 123, 255, 0.1)'">
+        <div class="card-body d-flex flex-column" [ngClass]="{ 'bg-light': product.stock <= 1 }">
+          <div class="product-image-container mb-3">
+            <img [src]="product.image" class="card-img-top product-image" alt="{{product.title}}" title="{{product.title}}">
+          </div>
+
+          <h5 class="card-title">{{ product.title }}</h5>
+          <p class="card-text flex-grow-1">{{ product.description }}</p>
+
+          <div class="product-info">
+            <p class="text-primary fw-bold fs-5">${{ product.price }}</p>
+            <p class="text-muted">Stock: {{ product.stock }}</p>
+            <p class="text-muted">Category: {{ product.category.title }}</p>
+          </div>
+
+          <!-- Stock Status -->
+          @switch (product.stock) {
+            @case (0) {
+              <p class="text-danger fw-bold">Out of Stock</p>
+            }
+            @case (1) {
+              <p class="text-warning fw-bold">Only 1 left!</p>
+            }
+            @default {
+              <p class="text-success">In Stock</p>
+            }
+          }
+
+          <!-- Add to Cart Section -->
+          <div class="mt-auto">
+            <div class="d-flex gap-2 align-items-center">
+              <input
+                type="number"
+                class="form-control"
+                placeholder="Qty"
+                #quantityInput
+                [max]="product.stock"
+                [min]="1"
+                value="1"
+                style="width: 80px;"
+              />
+              <button
+                (click)="addToCart(product, +quantityInput.value)"
+                class="btn btn-primary flex-grow-1"
+                [disabled]="product.stock === 0"
+              >
+                Add to Cart
+              </button>
+            </div>
+
+            <button
+              (click)="getDetails(product._id)"
+              class="btn btn-secondary  w-100 mt-2"
+            >
+              View Details
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+
+  <!-- No Products Message -->
+  <div *ngIf="!loading && !error && filteredProduct.length === 0" class="text-center mt-5">
+    <h3>No Products Found</h3>
+    <p class="text-muted">Try adjusting your search or category filter.</p>
+  </div>
+</div>

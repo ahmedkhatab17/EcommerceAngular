@@ -1,0 +1,93 @@
+<div class="container mt-5">
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="alert alert-danger" role="alert">
+    {{ error }}
+  </div>
+
+  <!-- Product Details -->
+  <div class="row" *ngIf="!loading && !error && product">
+    <div class="col-md-6">
+      <div class="product-image-container">
+        <img [src]="product.image" class="img-fluid rounded shadow" alt="{{ product.title }}">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="product-details">
+        <h1 class="mb-3">{{ product.title }}</h1>
+        <p class="text-muted mb-3">Category: {{ product.category.title }}</p>
+        <h2 class="text-primary mb-3">${{ product.price }}</h2>
+        <p class="mb-4">{{ product.description }}</p>
+
+        <div class="stock-info mb-4">
+          <p><strong>Stock:</strong> {{ product.stock }} units</p>
+          @switch (product.stock) {
+            @case (0) {
+              <p class="text-danger fw-bold">Out of Stock</p>
+            }
+            @case (1) {
+              <p class="text-warning fw-bold">Only 1 left!</p>
+            }
+            @default {
+              <p class="text-success">In Stock</p>
+            }
+          }
+        </div>
+
+        <!-- Add to Cart Section -->
+        <div class="add-to-cart-section mb-4" *ngIf="product.stock > 0">
+          <div class="row align-items-center">
+            <div class="col-md-4">
+              <label for="quantity" class="form-label">Quantity:</label>
+              <input
+                type="number"
+                id="quantity"
+                class="form-control"
+                [(ngModel)]="quantity"
+                (ngModelChange)="onQuantityChange()"
+                [max]="product.stock"
+                [min]="1"
+              />
+            </div>
+            <div class="col-md-8">
+              <button
+                (click)="addToCart()"
+                class="btn btn-primary btn-lg w-100"
+                [disabled]="product.stock === 0"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+
+          <div class="total-price mt-3">
+            <h4 class="text-primary">Total Price: ${{ totalPrice }}</h4>
+          </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="navigation-buttons">
+          <button (click)="goBack()" class="btn btn-outline-secondary me-2">
+            <i class="bi bi-arrow-left"></i> Back
+          </button>
+
+          <div class="btn-group" role="group">
+            <button (click)="previous()" type="button" class="btn btn-outline-primary">
+              <i class="bi bi-chevron-left"></i> Previous
+            </button>
+            <button (click)="next()" type="button" class="btn btn-outline-primary">
+              Next <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

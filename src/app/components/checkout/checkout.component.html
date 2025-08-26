@@ -1,0 +1,145 @@
+<div class="container mt-5">
+  <h2 class="mb-4">Checkout</h2>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Processing...</span>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="alert alert-danger" role="alert">
+    {{ error }}
+  </div>
+
+  <!-- Checkout Form -->
+  <div *ngIf="!loading && cart && cart.items.length > 0" class="row">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Shipping Information</h5>
+          
+          <form (ngSubmit)="placeOrder()" #checkoutForm="ngForm">
+            <div class="row">
+              <div class="col-md-12 mb-3">
+                <label for="street" class="form-label">Street Address</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="street"
+                  name="street"
+                  [(ngModel)]="orderData.shippingAddress.street"
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="city" class="form-label">City</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="city"
+                  name="city"
+                  [(ngModel)]="orderData.shippingAddress.city"
+                  required
+                >
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="state" class="form-label">State</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="state"
+                  name="state"
+                  [(ngModel)]="orderData.shippingAddress.state"
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="zipCode" class="form-label">ZIP Code</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="zipCode"
+                  name="zipCode"
+                  [(ngModel)]="orderData.shippingAddress.zipCode"
+                  required
+                >
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="country" class="form-label">Country</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="country"
+                  name="country"
+                  [(ngModel)]="orderData.shippingAddress.country"
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="paymentMethod" class="form-label">Payment Method</label>
+              <select
+                class="form-select"
+                id="paymentMethod"
+                name="paymentMethod"
+                [(ngModel)]="orderData.paymentMethod"
+                required
+              >
+                <option value="credit_card">Credit Card</option>
+                <option value="debit_card">Debit Card</option>
+                <option value="paypal">PayPal</option>
+              </select>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <button type="button" class="btn btn-outline-secondary" (click)="goBack()">
+                Back to Cart
+              </button>
+              <button type="submit" class="btn btn-primary" [disabled]="!checkoutForm.form.valid || loading">
+                Place Order
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Order Summary</h5>
+          
+          <div class="order-items">
+            @for (item of cart.items; track item.product._id) {
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <span class="fw-bold">{{ item.product.title }}</span>
+                <br>
+                <small class="text-muted">Qty: {{ item.quantity }}</small>
+              </div>
+              <span>${{ item.product.price * item.quantity }}</span>
+            </div>
+            }
+          </div>
+
+          <hr>
+          
+          <div class="d-flex justify-content-between fw-bold">
+            <span>Total:</span>
+            <span>${{ getCartTotal() }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+
+.welcome-image {
+  max-height: 360px;
+  object-fit: cover;
+}
+
+.jumbotron {
+  background: linear-gradient(180deg, #ffffff, #a0a08b);
+  border-radius: 12px;
+  padding: 2rem 1rem;
+}
+
+.hero {
+  position: relative;
+  display: inline-block;
+}
+
+.hero-title {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0,0,0,1);
+  padding: 0 1rem;
+}
+
+

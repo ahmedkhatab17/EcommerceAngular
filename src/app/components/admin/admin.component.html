@@ -1,0 +1,155 @@
+<div class="container py-4">
+  <h2 class="mb-3">Admin Dashboard</h2>
+  <p class="text-muted">Manage products and orders.</p>
+
+  <div class="row g-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Create Product</h5>
+        </div>
+        <div class="card-body text-center">
+          <div class="row justify-content-center g-3">
+            <div class="col-12 col-md-8 col-lg-6">
+              <div class="d-flex flex-column align-items-center">
+                <label class="form-label mb-1" style="font-size:.9rem;">Title</label>
+                <input class="form-control" style="max-width:480px;" [(ngModel)]="newProduct.title" placeholder="Product title">
+              </div>
+            </div>
+            <div class="col-12 col-md-8 col-lg-6">
+              <div class="d-flex flex-column align-items-center">
+                <label class="form-label mb-1" style="font-size:.9rem;">Description</label>
+                <input class="form-control" style="max-width:480px;" [(ngModel)]="newProduct.description" placeholder="Short description">
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="d-flex flex-column align-items-center">
+                <label class="form-label mb-1" style="font-size:.9rem;">Price</label>
+                <input type="number" class="form-control" style="max-width:220px;" [(ngModel)]="newProduct.price" min="0" step="0.01" placeholder="0.00">
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="d-flex flex-column align-items-center">
+                <label class="form-label mb-1" style="font-size:.9rem;">Quantity</label>
+                <input type="number" class="form-control" style="max-width:220px;" [(ngModel)]="newProduct.stock" min="0" placeholder="0">
+              </div>
+            </div>
+            <div class="col-12 col-md-8 col-lg-6">
+              <div class="d-flex flex-column align-items-center">
+                <label class="form-label mb-1" style="font-size:.9rem;">Image URL</label>
+                <input class="form-control" style="max-width:480px;" [(ngModel)]="newProduct.image" placeholder="https://...">
+              </div>
+            </div>
+            <div class="col-12 col-md-8 col-lg-6">
+              <div class="d-flex flex-column align-items-center">
+                <label class="form-label mb-1" style="font-size:.9rem;">Category</label>
+                <div class="input-group" style="max-width:480px;">
+                  <select class="form-select" [(ngModel)]="newProduct.category">
+                    <option value="" disabled selected>Select Category</option>
+                    @for (c of categories; track c._id) {
+                    <option [value]="c._id">{{ c.title }}</option>
+                    }
+                  </select>
+                  <input type="text" class="form-control" placeholder="New category title" [(ngModel)]="newCategoryTitle">
+                  <button class="btn btn-outline-primary" type="button" (click)="addCategory()">Add</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-success" (click)="createProduct()">Add Product</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="card-header">
+          <h5 class="mb-0">Products - Stock Control</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-sm align-middle text-center w-auto mx-auto">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Update</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (p of products; track p._id) {
+                <tr>
+                  <td style="min-width:220px">
+                    <div class="d-flex flex-column align-items-center">
+                      <label class="form-label mb-1" style="font-size:.85rem;">Title</label>
+                      <input type="text" class="form-control form-control-sm" style="max-width:220px;" [(ngModel)]="p.title">
+                    </div>
+                  </td>
+                  <td style="max-width:180px">
+                    <div class="d-flex flex-column align-items-center">
+                      <label class="form-label mb-1" style="font-size:.85rem;">Price</label>
+                      <input type="number" class="form-control form-control-sm" style="max-width:160px;" [(ngModel)]="p.price" min="0" step="0.01">
+                    </div>
+                  </td>
+                  <td style="max-width:120px">
+                    <div class="d-flex flex-column align-items-center">
+                      <label class="form-label mb-1" style="font-size:.85rem;">Quantity</label>
+                      <input type="number" class="form-control form-control-sm" style="max-width:120px;" [(ngModel)]="p.stock" min="0">
+                    </div>
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-primary" (click)="updateProduct(p)">Save</button>
+                  </td>
+                </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="card-header">
+          <h5 class="mb-0">Orders - Status Control</h5>
+        </div>
+        <div class="card-body">
+
+          <div class="table-responsive">
+            <table class="table table-sm align-middle">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Customer</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (o of orders; track o._id) {
+                <tr>
+                  <td>#{{ o._id.slice(-6) }}</td>
+                  <td>{{ o.user?.name || 'N/A' }}</td>
+                  <td>
+                    <span class="badge" [ngClass]="o.status === 'done' ? 'bg-success' : 'bg-warning'">{{ o.status }}</span>
+                  </td>
+                  <td class="d-flex gap-1">
+                    <button class="btn btn-sm btn-outline-warning" (click)="updateOrderStatus(o, 'pending')">Pending</button>
+                    <button class="btn btn-sm btn-outline-success" (click)="updateOrderStatus(o, 'done')">Done</button>
+                  </td>
+                </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

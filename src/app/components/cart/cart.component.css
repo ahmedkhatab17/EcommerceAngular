@@ -1,0 +1,36 @@
+.cart-item {
+  transition: all 0.3s ease;
+}
+
+.cart-item:hover {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 10px;
+  margin: -10px;
+}
+
+.quantity-controls .input-group {
+  max-width: 150px;
+}
+
+.quantity-controls input {
+  text-align: center;
+}
+
+.empty-cart {
+  padding: 3rem 0;
+}
+
+.empty-cart i {
+  font-size: 4rem;
+  color: #6c757d;
+}
+
+.summary-item {
+  font-size: 0.9rem;
+}
+
+.summary-total {
+  font-size: 1.1rem;
+  color: #007bff;
+}

@@ -1,0 +1,24 @@
+.order-items {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.order-items .d-flex {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.order-items .d-flex:last-child {
+  border-bottom: none;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
